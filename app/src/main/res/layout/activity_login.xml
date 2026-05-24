@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Encription Connection Badge -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/bg_badge_secure"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="20dp">
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/dot_green_pulse"
+                android:layout_marginEnd="6dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SECURE ENCRYPTED CONNECTION"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="#475569"
+                android:letterSpacing="0.05"/>
+        </LinearLayout>
+
+        <!-- Custom SVG Logo Container -->
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/logo_ruang_curhat_v3"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ruang Curhat"
+            android:textSize="26sp"
+            android:textColor="#0F172A"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instansional, Aman, dan Anonim"
+            android:textSize="12sp"
+            android:textColor="#64748B"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Tab Dinas vs Tamu -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#E2E8F0"
+            android:padding="4dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#F1F5F9">
+
+            <Button
+                android:id="@+id/btnTabDinas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Akun Dinas"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#0F172A"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                style="?android:attr/borderlessButtonStyle"/>
+
+            <Button
+                android:id="@+id/btnTabTamu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Anonim / Tamu"
+                android:backgroundTint="@android:color/transparent"
+                android:textColor="#64748B"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                style="?android:attr/borderlessButtonStyle"/>
+        </LinearLayout>
+
+        <!-- Email/Username Input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+            <TextView
+                android:id="@+id/tvLabelEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E-MAIL DINAS / USERNAME"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="#475569"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="6dp"/>
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_input_rounded"
+                android:paddingHorizontal="16dp"
+                android:hint="Masukkan e-mail dinas..."
+                android:inputType="textEmailAddress"
+                android:textSize="13sp"
+                android:textColor="#0F172A" />
+        </LinearLayout>
+
+        <!-- Password Input with Toggle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KATA SANDI"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="#475569"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="6dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_input_rounded">
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:background="@android:color/transparent"
+                    android:hint="••••••••"
+                    android:inputType="textPassword"
+                    android:textSize="13sp"
+                    android:textColor="#0F172A"/>
+                <ImageButton
+                    android:id="@+id/btnTogglePassword"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_eye_visible"
+                    android:contentDescription="Tampilkan Password"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- Accordion Demo Tray -->
+        <LinearLayout
+            android:id="@+id/layoutDemoTrayHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_demo_tray_header"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_key_gold"
+                android:layout_marginEnd="8dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Kunci Akses Cepat (Sidang Demo)"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#475569"/>
+            <ImageView
+                android:id="@+id/ivDemoTrayArrow"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_chevron_down"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutDemoTrayContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_demo_tray_content"
+            android:padding="12dp"
+            android:visibility="gone">
+            <!-- Pilihan Akun Pengembang -->
+            <LinearLayout
+                android:id="@+id/btnDemoAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_sub_premium"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💻 Mode Pengembang (Admin)"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#0284C7"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="admin@gmail.com / admin123"
+                    android:textSize="10sp"
+                    android:textColor="#64748B"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/btnSubmitLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Autentikasi Masuk Aman"
+            android:backgroundTint="#0F172A"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+</ScrollView>

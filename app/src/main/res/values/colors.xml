@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Warna Bawaan Android Studio -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Warna Tambahan Premium Ruang Curhat (Tambahkan Ini!) -->
+    <color name="brand_text">#0F172A</color>
+    <color name="brand_subtext">#475569</color>
 </resources>

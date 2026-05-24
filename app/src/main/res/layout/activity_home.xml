@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".HomeActivity">
+
+    <!-- Header Dashboard -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvRoleBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ANGGOTA DINAS"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="#0284C7"
+                android:background="@drawable/bg_badge_secure"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"/>
+
+            <TextView
+                android:id="@+id/tvUserWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Pengguna"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#0F172A"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnGoToProfile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_card_sub_premium"
+            android:src="@drawable/ic_key_gold"
+            android:contentDescription="Profil Saya"/>
+    </RelativeLayout>
+
+    <!-- Banner Motivasi Calming -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_demo_tray_content"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="28dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🍃"
+            android:textSize="28sp"
+            android:layout_marginEnd="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ruang Curhat Aman"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#0F172A"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apapun beban pikiranmu, bicarakan bersama pembimbing rohani terpercaya."
+                android:textSize="10sp"
+                android:textColor="#64748B"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PILIH KATEGORI BIMBINGAN"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:textColor="#64748B"
+        android:letterSpacing="0.05"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Grid 5 Agama -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Tombol Islam -->
+        <LinearLayout
+            android:id="@+id/btnCategoryIslam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_sub_premium"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌙"
+                android:textSize="24sp"
+                android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bimbingan Mental Islam"
+                    android:textStyle="bold"
+                    android:textColor="#0F172A"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ustadz &amp; Da'i Bintal"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_chevron_down"
+                android:rotation="-90"
+                tools:ignore="UseAppTint" />
+        </LinearLayout>
+
+        <!-- Tombol Kristen -->
+        <LinearLayout
+            android:id="@+id/btnCategoryKristen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_sub_premium"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✝️"
+                android:textSize="24sp"
+                android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bimbingan Kristen Protestan"
+                    android:textStyle="bold"
+                    android:textColor="#0F172A"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendeta &amp; Penatua"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_chevron_down"
+                android:rotation="-90"
+                tools:ignore="UseAppTint" />
+        </LinearLayout>
+
+        <!-- Tombol Katolik -->
+        <LinearLayout
+            android:id="@+id/btnCategoryKatolik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_sub_premium"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⛪"
+                android:textSize="24sp"
+                android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bimbingan Katolik"
+                    android:textStyle="bold"
+                    android:textColor="#0F172A"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Romo &amp; Pastor Bintal"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_chevron_down"
+                android:rotation="-90"
+                tools:ignore="UseAppTint" />
+        </LinearLayout>
+
+        <!-- Tombol Hindu -->
+        <LinearLayout
+            android:id="@+id/btnCategoryHindu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_sub_premium"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🕉️"
+                android:textSize="24sp"
+                android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bimbingan Hindu"
+                    android:textStyle="bold"
+                    android:textColor="#0F172A"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Penyuluh Bintal Hindu"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_chevron_down"
+                android:rotation="-90"
+                tools:ignore="UseAppTint" />
+        </LinearLayout>
+
+        <!-- Tombol Buddha -->
+        <LinearLayout
+            android:id="@+id/btnCategoryBuddha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_sub_premium"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="☸️"
+                android:textSize="24sp"
+                android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bimbingan Buddha"
+                    android:textStyle="bold"
+                    android:textColor="#0F172A"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bhante &amp; Dharmacarya"
+                    android:textColor="#64748B"
+                    android:textSize="10sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_chevron_down"
+                android:rotation="-90"
+                tools:ignore="UseAppTint" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- PANEL KHUSUS PENGEMBANG (ADMIN ONLY TRIGGER) -->
+    <LinearLayout
+        android:id="@+id/layoutDevTrigger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E2E8F0"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnOpenDevPanel"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="🛠️ Masuk Panel Pengembang"
+            android:backgroundTint="#0F172A"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- WAJIB: Tag manifest dan deklarasi xmlns di bawah ini yang mengikat (bind) prefix android -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Izin Internet (Sekarang prefix android:name sudah terikat dan aman dari error) -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,16 +14,44 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RuangCurhat">
+        android:theme="@style/Theme.RuangCurhat"
+        tools:targetApi="31">
+
+        <!-- 1. Halaman Login (MainActivity) -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 2. Halaman Beranda Utama (HomeActivity) -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <!-- 3. Halaman Profil Anggota (ProfileActivity) -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <!-- 4. Halaman Edit Data Mandiri (EditProfileActivity) -->
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+
+        <!-- 5. Halaman Detail Kategori Agama Dinamis (CategoryDetailActivity) -->
+        <activity
+            android:name=".CategoryDetailActivity"
+            android:exported="false" />
+
+        <!-- 6. Halaman Panel Pengembang / Admin (DevPanelActivity) -->
+        <activity
+            android:name=".DevPanelActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

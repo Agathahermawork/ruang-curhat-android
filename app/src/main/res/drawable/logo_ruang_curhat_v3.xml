@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- Balon Dialog Kiri (Sky Blue) -->
+    <path
+        android:fillColor="#FF0284C7"
+        android:pathData="M42,22C27.64,22 16,31.85 16,44c0,6.15 3.04,11.74 8,15.85V71l12,-6.43c1.92,0.91 4,1.43 6,1.43 14.36,0 26,-9.85 26,-22S56.36,22 42,22z"/>
+    <!-- Balon Dialog Kanan (Emerald Green) -->
+    <path
+        android:fillColor="#FF059669"
+        android:pathData="M58,34C43.64,34 32,43.85 32,56c0,6.15 3.04,11.74 40,71.85V83l12,-6.43c1.92,0.91 4,1.43 6,1.43 14.36,0 26,-9.85 26,-22S72.36,34 58,34z"/>
+    <!-- Hati di Tengah (Soft Rose Red) -->
+    <path
+        android:fillColor="#FFE11D48"
+        android:pathData="M50,42c0,0 -3.5,-3.5 -7.5,-3.5C38.5,38.5 35.5,41.5 35.5,45.5c0,6 7.5,11 14.5,16c7,-5 14.5,-10 14.5,-16c0,-4 -3,-7 -7,-7c-4,0 -7.5,3.5 -7.5,3.5z"/>
+</vector>
