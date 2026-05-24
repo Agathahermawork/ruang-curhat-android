@@ -1,19 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#F8FAFC"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:gravity="center_vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Logo Icon -->
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center"
+            android:src="@android:drawable/btn_star_big_on"
+            android:tint="#1E88E5"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ruang Curhat"
+            android:textSize="28sp"
+            android:textColor="#1E293B"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tempat aman dan anonim untuk ceritamu"
+            android:textSize="14sp"
+            android:textColor="#64748B"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Input Email/Username -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email / Username"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#1E293B"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:hint="Masukan email terdaftar..."
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:inputType="textEmailAddress"
+            android:textSize="14sp"
+            android:textColor="#1E293B"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Input Password -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kata Sandi"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#1E293B"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="6dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:hint="Masukan kata sandi..."
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:inputType="textPassword"
+            android:textSize="14sp"
+            android:textColor="#1E293B"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- Tombol Masuk -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:backgroundTint="#1E88E5"
+            android:text="Masuk Sekarang"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+</ScrollView>

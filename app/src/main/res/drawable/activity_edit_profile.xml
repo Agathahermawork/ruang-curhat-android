@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header Edit -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="32dp">
+            <ImageButton
+                android:id="@+id/btnBackFromEdit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_btn_dark"
+                android:src="@drawable/ic_back_white"
+                android:contentDescription="Kembali"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="Mutakhirkan Data Mandiri"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#0F172A"/>
+        </RelativeLayout>
+
+        <!-- Form Edit Inputs -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NAMA LENGKAP"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="#64748B"
+            android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etEditName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:textSize="12sp"
+            android:textColor="#0F172A"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PANGKAT / GOLONGAN"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="#64748B"
+            android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etEditRank"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:textSize="12sp"
+            android:textColor="#0F172A"
+            android:inputType="textCapWords"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NRP / NIP"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="#64748B"
+            android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etEditNrp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:textSize="12sp"
+            android:textColor="#0F172A"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JABATAN DINAS"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="#64748B"
+            android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etEditJob"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:textSize="12sp"
+            android:textColor="#0F172A"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KESATUAN / UNIT KERJA"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="#64748B"
+            android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etEditUnit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:textSize="12sp"
+            android:textColor="#0F172A"
+            android:inputType="text"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID TELEGRAM ATAU NOMOR HP"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="#64748B"
+            android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etEditTelegram"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:textSize="12sp"
+            android:textColor="#0F172A"
+            android:inputType="text"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Simpan Perubahan"
+            android:backgroundTint="#0284C7"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+</ScrollView>
