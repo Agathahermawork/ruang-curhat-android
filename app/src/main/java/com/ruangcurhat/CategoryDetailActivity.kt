@@ -12,8 +12,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.net.URLEncoder
 import com.ruangcurhat.R
+import com.ruangcurhat.api.ApiClient
+import com.ruangcurhat.api.CounselorDto
+import com.ruangcurhat.api.ListResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.net.URLEncoder
 
 class CategoryDetailActivity : AppCompatActivity() {
 
@@ -33,39 +39,66 @@ class CategoryDetailActivity : AppCompatActivity() {
         val container = findViewById<LinearLayout>(R.id.layoutConsContainer)
         container.removeAllViews()
 
-        // Ambil data konselor statis + dinamis dari database memori lokal Panel Pengembang
-        val counselors = DataStoreManager.getCounselorsByReligion(religion)
-
-        if (counselors.isEmpty()) {
-            val emptyView = TextView(this).apply {
-                text = "Belum ada pembimbing rohani terdaftar untuk kategori ini."
-                textSize = 12f
-                textAlignment = View.TEXT_ALIGNMENT_CENTER
-                setPadding(0, 100, 0, 0)
-                setTextColor(resources.getColor(R.color.brand_subtext))
-            }
-            container.addView(emptyView)
-            return
+        val loadingView = TextView(this).apply {
+            text = "Memuat daftar pembimbing..."
+            textSize = 12f
+            textAlignment = View.TEXT_ALIGNMENT_CENTER
+            setPadding(0, 100, 0, 0)
+            setTextColor(resources.getColor(R.color.brand_subtext))
         }
+        container.addView(loadingView)
 
-        // Inflate view secara dinamis agar 100% kokoh dan tidak memerlukan adapter
-        for (c in counselors) {
-            val card = LayoutInflater.from(this).inflate(R.layout.item_counselor_card, container, false)
+        ApiClient.service.getCounselors(religion).enqueue(object : Callback<ListResponse<CounselorDto>> {
+            override fun onResponse(call: Call<ListResponse<CounselorDto>>, response: Response<ListResponse<CounselorDto>>) {
+                container.removeAllViews()
 
-            card.findViewById<TextView>(R.id.tvConsEmoji).text = c.emoji
-            card.findViewById<TextView>(R.id.tvConsName).text = c.name
-            card.findViewById<TextView>(R.id.tvConsRank).text = "Pangkat: ${c.pangkat}"
-            card.findViewById<TextView>(R.id.tvConsNrp).text = "NRP/NIP: ${c.nrp}"
-            card.findViewById<TextView>(R.id.tvConsJob).text = c.jabatan
-            card.findViewById<TextView>(R.id.tvConsUnit).text = c.kesatuan
+                if (!response.isSuccessful || response.body()?.success != true) {
+                    showEmptyState(container, "Gagal memuat data pembimbing dari server.")
+                    return
+                }
 
-            val btnChat = card.findViewById<Button>(R.id.btnContactTelegram)
-            btnChat.setOnClickListener {
-                triggerTelegramIntent(c.name, c.pangkat, c.telegram)
+                val counselors = response.body()?.data.orEmpty()
+
+                if (counselors.isEmpty()) {
+                    showEmptyState(container, "Belum ada pembimbing rohani terdaftar untuk kategori ini.")
+                    return
+                }
+
+                for (c in counselors) {
+                    val card = LayoutInflater.from(this@CategoryDetailActivity).inflate(R.layout.item_counselor_card, container, false)
+
+                    card.findViewById<TextView>(R.id.tvConsEmoji).text = c.emoji ?: ""
+                    card.findViewById<TextView>(R.id.tvConsName).text = c.name
+                    card.findViewById<TextView>(R.id.tvConsRank).text = "Pangkat: ${c.pangkat}"
+                    card.findViewById<TextView>(R.id.tvConsNrp).text = "NRP/NIP: ${c.nrp}"
+                    card.findViewById<TextView>(R.id.tvConsJob).text = c.jabatan ?: "-"
+                    card.findViewById<TextView>(R.id.tvConsUnit).text = c.kesatuan ?: "-"
+
+                    val btnChat = card.findViewById<Button>(R.id.btnContactTelegram)
+                    btnChat.setOnClickListener {
+                        triggerTelegramIntent(c.name, c.pangkat, c.telegram)
+                    }
+
+                    container.addView(card)
+                }
             }
 
-            container.addView(card)
+            override fun onFailure(call: Call<ListResponse<CounselorDto>>, t: Throwable) {
+                container.removeAllViews()
+                showEmptyState(container, "Gagal terhubung ke server.")
+            }
+        })
+    }
+
+    private fun showEmptyState(container: LinearLayout, message: String) {
+        val emptyView = TextView(this).apply {
+            text = message
+            textSize = 12f
+            textAlignment = View.TEXT_ALIGNMENT_CENTER
+            setPadding(0, 100, 0, 0)
+            setTextColor(resources.getColor(R.color.brand_subtext))
         }
+        container.addView(emptyView)
     }
 
     private fun triggerTelegramIntent(consName: String, consRank: String, telegram: String) {

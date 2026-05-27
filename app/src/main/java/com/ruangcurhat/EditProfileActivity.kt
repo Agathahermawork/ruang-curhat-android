@@ -7,7 +7,14 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ruangcurhat.R
+import com.ruangcurhat.api.ApiClient
+import com.ruangcurhat.api.ApiResponse
+import com.ruangcurhat.api.UpdateProfileRequest
+import com.ruangcurhat.api.UserDto
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -48,19 +55,81 @@ class EditProfileActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Simpan pembaruan ke SharedPreferences sesi
-            sharedPref.edit().apply {
-                putString("NAME", name)
-                putString("PANGKAT", rank.uppercase())
-                putString("NRP", nrp)
-                putString("JABATAN", job)
-                putString("KESATUAN", unit)
-                putString("TELEGRAM", telegram)
-                apply()
+            val token = sharedPref.getString("TOKEN", null)
+            if (token.isNullOrBlank()) {
+                Toast.makeText(this, "Sesi login tidak valid. Silakan login ulang.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
 
-            Toast.makeText(this, "Perubahan berhasil disimpan!", Toast.LENGTH_SHORT).show()
-            finish()
+            btnSave.isEnabled = false
+            btnSave.text = "Menyimpan..."
+
+            val request = UpdateProfileRequest(
+                name = name,
+                pangkat = rank.uppercase(),
+                nrp = nrp,
+                jabatan = job,
+                kesatuan = unit,
+                telegram = telegram
+            )
+
+            ApiClient.service.updateProfile("Bearer $token", request).enqueue(object : Callback<ApiResponse<UserDto>> {
+                override fun onResponse(call: Call<ApiResponse<UserDto>>, response: Response<ApiResponse<UserDto>>) {
+                    btnSave.isEnabled = true
+                    btnSave.text = "Simpan Perubahan"
+
+                    val body = response.body()
+                    val user = body?.data
+                    if (!response.isSuccessful || body?.success != true || user == null) {
+                        val message = body?.message ?: parseErrorMessage(response) ?: "Gagal menyimpan perubahan profil."
+                        Toast.makeText(this@EditProfileActivity, message, Toast.LENGTH_LONG).show()
+                        return
+                    }
+
+                    sharedPref.edit().apply {
+                        putString("NAME", user.name)
+                        putString("PANGKAT", user.pangkat ?: "")
+                        putString("NRP", user.nrp ?: "")
+                        putString("JABATAN", user.jabatan ?: "")
+                        putString("KESATUAN", user.kesatuan ?: "")
+                        putString("TELEGRAM", user.telegram ?: "")
+                        apply()
+                    }
+
+                    Toast.makeText(this@EditProfileActivity, "Perubahan berhasil disimpan!", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+
+                override fun onFailure(call: Call<ApiResponse<UserDto>>, t: Throwable) {
+                    btnSave.isEnabled = true
+                    btnSave.text = "Simpan Perubahan"
+                    Toast.makeText(this@EditProfileActivity, "Gagal terhubung ke server: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+                }
+            })
+        }
+    }
+
+    private fun parseErrorMessage(response: Response<ApiResponse<UserDto>>): String? {
+        val rawError = response.errorBody()?.string().orEmpty()
+        if (rawError.isBlank()) {
+            return "Gagal menyimpan perubahan profil. HTTP ${response.code()}"
+        }
+
+        return runCatching {
+            val json = JSONObject(rawError)
+            val validationErrors = json.optJSONObject("errors")
+            if (validationErrors != null && validationErrors.keys().hasNext()) {
+                val key = validationErrors.keys().next()
+                val firstError = validationErrors.optJSONArray(key)?.optString(0)
+                if (!firstError.isNullOrBlank()) {
+                    return@runCatching firstError
+                }
+            }
+
+            val message = json.optString("message")
+            if (message.isNotBlank()) message else "Gagal menyimpan perubahan profil. HTTP ${response.code()}"
+        }.getOrElse {
+            "Gagal menyimpan perubahan profil. HTTP ${response.code()}"
         }
     }
 }

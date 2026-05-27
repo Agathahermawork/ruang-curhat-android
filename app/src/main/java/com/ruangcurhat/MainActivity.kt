@@ -13,6 +13,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.ruangcurhat.api.ApiClient
+import com.ruangcurhat.api.LoginRequest
+import com.ruangcurhat.api.LoginResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -94,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Kredensial Demo Dimuat!", Toast.LENGTH_SHORT).show()
         }
 
-        // 4. Submit Login & Validasi Dinamis Terhadap DataStoreManager!
+        // 4. Submit Login ke API Laravel
         btnSubmit.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
@@ -104,31 +110,45 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Validasi Terhadap List Akun Dinamis yang dibuat Admin di Dev Panel!
-            val matchedUser = DataStoreManager.validateUserLogin(email)
+            btnSubmit.isEnabled = false
+            btnSubmit.text = "MEMERIKSA..."
 
-            if (matchedUser != null) {
-                // Berhasil Login! Simpan Sesi dan Berpindah Halaman
-                val sharedPref = getSharedPreferences("SESSION", Context.MODE_PRIVATE)
-                sharedPref.edit().apply {
-                    putString("ROLE", matchedUser.role)
-                    putString("NAME", matchedUser.name)
-                    putString("PANGKAT", matchedUser.pangkat)
-                    putString("NRP", matchedUser.nrp)
-                    putString("JABATAN", matchedUser.jabatan)
-                    putString("KESATUAN", matchedUser.kesatuan)
-                    putString("TELEGRAM", matchedUser.telegram)
-                    apply()
+            ApiClient.service.login(LoginRequest(email, password)).enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                    btnSubmit.isEnabled = true
+                    btnSubmit.text = "Autentikasi Masuk Aman"
+
+                    val body = response.body()
+                    val user = body?.data
+
+                    if (!response.isSuccessful || body?.success != true || user == null || body.token.isNullOrBlank()) {
+                        Toast.makeText(this@MainActivity, body?.message ?: "Email atau password tidak sesuai.", Toast.LENGTH_LONG).show()
+                        return
+                    }
+
+                    getSharedPreferences("SESSION", Context.MODE_PRIVATE).edit().apply {
+                        putString("TOKEN", body.token)
+                        putString("ROLE", user.role ?: "user")
+                        putString("NAME", user.name)
+                        putString("PANGKAT", user.pangkat ?: "")
+                        putString("NRP", user.nrp ?: "")
+                        putString("JABATAN", user.jabatan ?: "")
+                        putString("KESATUAN", user.kesatuan ?: "")
+                        putString("TELEGRAM", user.telegram ?: "")
+                        apply()
+                    }
+
+                    Toast.makeText(this@MainActivity, "Autentikasi Berhasil!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+                    finish()
                 }
 
-                Toast.makeText(this, "Autentikasi Berhasil!", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, "Email tidak terdaftar di sistem dinas!", Toast.LENGTH_LONG).show()
-            }
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    btnSubmit.isEnabled = true
+                    btnSubmit.text = "Autentikasi Masuk Aman"
+                    Toast.makeText(this@MainActivity, "Gagal terhubung ke server: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+                }
+            })
         }
     }
 }

@@ -14,6 +14,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import com.ruangcurhat.api.ApiClient
+import com.ruangcurhat.api.ApiResponse
+import com.ruangcurhat.api.CounselorDto
+import com.ruangcurhat.api.CounselorRequest
+import com.ruangcurhat.api.ListResponse
+import com.ruangcurhat.api.RegisterRequest
+import com.ruangcurhat.api.UserDto
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DevPanelActivity : AppCompatActivity() {
 
@@ -26,7 +36,6 @@ class DevPanelActivity : AppCompatActivity() {
         val btnBack = findViewById<ImageButton>(R.id.btnBackFromDev)
         val spinnerRel = findViewById<Spinner>(R.id.spinnerReligion)
 
-        // Form 1: Konselor
         val etConsName = findViewById<EditText>(R.id.etDevConsName)
         val etConsRank = findViewById<EditText>(R.id.etDevConsRank)
         val etConsNrp = findViewById<EditText>(R.id.etDevConsNrp)
@@ -35,24 +44,20 @@ class DevPanelActivity : AppCompatActivity() {
         val etConsTelegram = findViewById<EditText>(R.id.etDevConsTelegram)
         val btnSaveCons = findViewById<Button>(R.id.btnRegisterNewCounselor)
 
-        // Form 2: Anggota
         val etUserEmail = findViewById<EditText>(R.id.etDevUserEmail)
         val etUserName = findViewById<EditText>(R.id.etDevUserName)
         val etUserRank = findViewById<EditText>(R.id.etDevUserRank)
         val etUserNrp = findViewById<EditText>(R.id.etDevUserNrp)
         val btnSaveUser = findViewById<Button>(R.id.btnRegisterNewUser)
 
-        // List 3: Kelola
         layoutDevConsListContainer = findViewById(R.id.layoutDevConsListContainer)
 
-        // Setup Opsi Dropdown Kategori Agama
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayOf("Islam", "Kristen", "Katolik", "Hindu", "Buddha"))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerRel.adapter = adapter
 
         btnBack.setOnClickListener { finish() }
 
-        // 1. Logika Daftarkan Konselor Baru
         btnSaveCons.setOnClickListener {
             val name = etConsName.text.toString().trim()
             val rank = etConsRank.text.toString().trim()
@@ -67,30 +72,40 @@ class DevPanelActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val emoji = when (religion) {
-                "Islam" -> "👳‍♂️"
-                "Kristen" -> "👨‍💼"
-                "Katolik" -> "⛪"
-                "Hindu" -> "🕉️"
-                else -> "☸️"
-            }
+            btnSaveCons.isEnabled = false
+            btnSaveCons.text = "MENYIMPAN..."
 
-            val newCons = DataStoreManager.Counselor(name, rank.uppercase(), nrp, job, unit, telegram, religion, emoji)
-            DataStoreManager.addCounselor(newCons)
+            val request = CounselorRequest(name, rank.uppercase(), nrp, job, unit, telegram, religion)
+            ApiClient.service.createCounselor(request).enqueue(object : Callback<ApiResponse<CounselorDto>> {
+                override fun onResponse(call: Call<ApiResponse<CounselorDto>>, response: Response<ApiResponse<CounselorDto>>) {
+                    btnSaveCons.isEnabled = true
+                    btnSaveCons.text = "Simpan & Daftarkan Konselor"
 
-            // Bersihkan Inputan
-            etConsName.text.clear()
-            etConsRank.text.clear()
-            etConsNrp.text.clear()
-            etConsJob.text.clear()
-            etConsUnit.text.clear()
-            etConsTelegram.text.clear()
+                    val body = response.body()
+                    if (!response.isSuccessful || body?.success != true) {
+                        Toast.makeText(this@DevPanelActivity, body?.message ?: "Gagal menyimpan konselor.", Toast.LENGTH_LONG).show()
+                        return
+                    }
 
-            Toast.makeText(this, "Konselor baru berhasil disimpan!", Toast.LENGTH_SHORT).show()
-            renderCounselorList() // Refresh List Kelola
+                    etConsName.text.clear()
+                    etConsRank.text.clear()
+                    etConsNrp.text.clear()
+                    etConsJob.text.clear()
+                    etConsUnit.text.clear()
+                    etConsTelegram.text.clear()
+
+                    Toast.makeText(this@DevPanelActivity, "Konselor baru berhasil disimpan!", Toast.LENGTH_SHORT).show()
+                    renderCounselorList()
+                }
+
+                override fun onFailure(call: Call<ApiResponse<CounselorDto>>, t: Throwable) {
+                    btnSaveCons.isEnabled = true
+                    btnSaveCons.text = "Simpan & Daftarkan Konselor"
+                    Toast.makeText(this@DevPanelActivity, "Gagal terhubung ke server: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+                }
+            })
         }
 
-        // 2. Logika Tambah Anggota Dinas Baru (BISA DIPAKAI LOGIN NYATA!)
         btnSaveUser.setOnClickListener {
             val email = etUserEmail.text.toString().trim()
             val name = etUserName.text.toString().trim()
@@ -102,63 +117,119 @@ class DevPanelActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Daftarkan akun baru ke Database Memori
-            val newUser = DataStoreManager.UserAccount(email, name, rank.uppercase(), nrp, "Prajurit Dinas", "Lanud Abdulrachman Saleh", "+62...", "user")
-            DataStoreManager.addUserAccount(newUser)
+            btnSaveUser.isEnabled = false
+            btnSaveUser.text = "MENYIMPAN..."
 
-            // Bersihkan inputan
-            etUserEmail.text.clear()
-            etUserName.text.clear()
-            etUserRank.text.clear()
-            etUserNrp.text.clear()
+            val request = RegisterRequest(
+                email = email,
+                password = null,
+                name = name,
+                pangkat = rank.uppercase(),
+                nrp = nrp,
+                jabatan = "Prajurit Dinas",
+                kesatuan = "Lanud Abdulrachman Saleh",
+                telegram = "+62...",
+                role = "user"
+            )
 
-            Toast.makeText(this, "Akun dinas anggota berhasil diaktifkan! Silakan coba login kembali.", Toast.LENGTH_LONG).show()
+            ApiClient.service.register(request).enqueue(object : Callback<ApiResponse<UserDto>> {
+                override fun onResponse(call: Call<ApiResponse<UserDto>>, response: Response<ApiResponse<UserDto>>) {
+                    btnSaveUser.isEnabled = true
+                    btnSaveUser.text = "Tambah & Aktifkan Anggota"
+
+                    val body = response.body()
+                    if (!response.isSuccessful || body?.success != true) {
+                        Toast.makeText(this@DevPanelActivity, body?.message ?: "Gagal membuat akun dinas.", Toast.LENGTH_LONG).show()
+                        return
+                    }
+
+                    etUserEmail.text.clear()
+                    etUserName.text.clear()
+                    etUserRank.text.clear()
+                    etUserNrp.text.clear()
+
+                    Toast.makeText(this@DevPanelActivity, "Akun dinas berhasil diaktifkan. Password default: password123", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onFailure(call: Call<ApiResponse<UserDto>>, t: Throwable) {
+                    btnSaveUser.isEnabled = true
+                    btnSaveUser.text = "Tambah & Aktifkan Anggota"
+                    Toast.makeText(this@DevPanelActivity, "Gagal terhubung ke server: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+                }
+            })
         }
 
-        // Render List Kelola Awal
         renderCounselorList()
     }
 
-    // 3. Logika Render & Hapus Konselor Dinamis Lintas Agama
     private fun renderCounselorList() {
+        showAdminListMessage("Memuat daftar konselor...")
+
+        ApiClient.service.getCounselors().enqueue(object : Callback<ListResponse<CounselorDto>> {
+            override fun onResponse(call: Call<ListResponse<CounselorDto>>, response: Response<ListResponse<CounselorDto>>) {
+                layoutDevConsListContainer.removeAllViews()
+
+                if (!response.isSuccessful || response.body()?.success != true) {
+                    showAdminListMessage("Gagal memuat data konselor.")
+                    return
+                }
+
+                val allCounselors = response.body()?.data.orEmpty()
+                if (allCounselors.isEmpty()) {
+                    showAdminListMessage("Belum ada konselor terdaftar.")
+                    return
+                }
+
+                for (c in allCounselors) {
+                    val view = LayoutInflater.from(this@DevPanelActivity).inflate(R.layout.item_counselor_card, layoutDevConsListContainer, false)
+
+                    view.findViewById<TextView>(R.id.tvConsEmoji).text = c.emoji ?: ""
+                    view.findViewById<TextView>(R.id.tvConsName).text = c.name
+                    view.findViewById<TextView>(R.id.tvConsRank).text = "Pangkat: ${c.pangkat}"
+                    view.findViewById<TextView>(R.id.tvConsNrp).text = "NRP/NIP: ${c.nrp}"
+                    view.findViewById<TextView>(R.id.tvConsJob).text = c.jabatan ?: "-"
+                    view.findViewById<TextView>(R.id.tvConsUnit).text = c.kesatuan ?: "-"
+
+                    val btnDelete = view.findViewById<AppCompatButton>(R.id.btnContactTelegram)
+                    btnDelete.text = "Hapus Konselor (Admin)"
+                    btnDelete.supportBackgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this@DevPanelActivity, android.R.color.holo_red_dark))
+                    btnDelete.setOnClickListener { deleteCounselor(c) }
+
+                    layoutDevConsListContainer.addView(view)
+                }
+            }
+
+            override fun onFailure(call: Call<ListResponse<CounselorDto>>, t: Throwable) {
+                showAdminListMessage("Gagal terhubung ke server.")
+            }
+        })
+    }
+
+    private fun deleteCounselor(counselor: CounselorDto) {
+        ApiClient.service.deleteCounselor(counselor.id).enqueue(object : Callback<ApiResponse<Unit>> {
+            override fun onResponse(call: Call<ApiResponse<Unit>>, response: Response<ApiResponse<Unit>>) {
+                if (!response.isSuccessful) {
+                    Toast.makeText(this@DevPanelActivity, "Gagal menghapus konselor.", Toast.LENGTH_LONG).show()
+                    return
+                }
+
+                Toast.makeText(this@DevPanelActivity, "Konselor ${counselor.name} berhasil dihapus!", Toast.LENGTH_SHORT).show()
+                renderCounselorList()
+            }
+
+            override fun onFailure(call: Call<ApiResponse<Unit>>, t: Throwable) {
+                Toast.makeText(this@DevPanelActivity, "Gagal terhubung ke server: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    private fun showAdminListMessage(message: String) {
         layoutDevConsListContainer.removeAllViews()
-        val allCounselors = DataStoreManager.getAllCounselors()
-
-        if (allCounselors.isEmpty()) {
-            val tvEmpty = TextView(this).apply {
-                text = "Belum ada konselor terdaftar."
-                textSize = 11f
-                setTextColor(ContextCompat.getColor(this@DevPanelActivity, R.color.brand_subtext))
-            }
-            layoutDevConsListContainer.addView(tvEmpty)
-            return
+        val tvMessage = TextView(this).apply {
+            text = message
+            textSize = 11f
+            setTextColor(ContextCompat.getColor(this@DevPanelActivity, R.color.brand_subtext))
         }
-
-        for (c in allCounselors) {
-            val view = LayoutInflater.from(this).inflate(R.layout.item_counselor_card, layoutDevConsListContainer, false)
-
-            view.findViewById<TextView>(R.id.tvConsEmoji).text = c.emoji
-            view.findViewById<TextView>(R.id.tvConsName).text = c.name
-            view.findViewById<TextView>(R.id.tvConsRank).text = "Pangkat: ${c.pangkat}"
-            view.findViewById<TextView>(R.id.tvConsNrp).text = "NRP/NIP: ${c.nrp}"
-            view.findViewById<TextView>(R.id.tvConsJob).text = c.jabatan
-            view.findViewById<TextView>(R.id.tvConsUnit).text = c.kesatuan
-
-            // Menggunakan AppCompatButton agar serasi dengan perubahan tipe di XML
-            val btnDelete = view.findViewById<AppCompatButton>(R.id.btnContactTelegram)
-            btnDelete.text = "Hapus Konselor (Admin)"
-
-            // Mengubah warna latar menggunakan ColorStateList (Aman untuk Material Components & menjaga sudut rounded tetap utuh)
-            val redColor = ContextCompat.getColor(this, android.R.color.holo_red_dark)
-            btnDelete.supportBackgroundTintList = ColorStateList.valueOf(redColor)
-
-            btnDelete.setOnClickListener {
-                DataStoreManager.deleteCounselor(c.nrp)
-                Toast.makeText(this, "Konselor ${c.name} berhasil dihapus!", Toast.LENGTH_SHORT).show()
-                renderCounselorList() // Refresh List Kelola
-            }
-
-            layoutDevConsListContainer.addView(view)
-        }
+        layoutDevConsListContainer.addView(tvMessage)
     }
 }

@@ -7,6 +7,11 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.ruangcurhat.api.ApiClient
+import com.ruangcurhat.api.ApiResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -41,7 +46,14 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnLogout.setOnClickListener {
-            // Bersihkan sesi saat keluar
+            val token = sharedPref.getString("TOKEN", null)
+            if (!token.isNullOrBlank()) {
+                ApiClient.service.logout("Bearer $token").enqueue(object : Callback<ApiResponse<Unit>> {
+                    override fun onResponse(call: Call<ApiResponse<Unit>>, response: Response<ApiResponse<Unit>>) = Unit
+                    override fun onFailure(call: Call<ApiResponse<Unit>>, t: Throwable) = Unit
+                })
+            }
+
             sharedPref.edit().clear().apply()
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
