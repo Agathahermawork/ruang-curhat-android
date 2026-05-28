@@ -1,180 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Pembungkus Utama agar Form bisa di-scroll saat keyboard muncul -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="@drawable/bg_calming_gradient"
+    android:scrollbars="none"
     tools:context=".EditProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingBottom="40dp">
 
-        <!-- Header Edit -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="32dp">
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="20dp"
+            android:background="#FFFFFF"
+            android:elevation="3dp"
+            android:outlineProvider="bounds">
 
             <ImageButton
                 android:id="@+id/btnBackFromEdit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
                 android:background="@drawable/bg_btn_dark"
+                android:backgroundTint="#52B788"
                 android:src="@drawable/ic_back_white"
+                android:scaleType="centerInside"
+                android:elevation="0dp"
                 android:contentDescription="Kembali"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Mutakhirkan Data Mandiri"
-                android:textSize="15sp"
+                android:text="Mutakhirkan Data"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
-                android:textColor="#0F172A"/>
+                android:textColor="#000000"
+                android:letterSpacing="-0.01"/>
         </RelativeLayout>
 
-        <!-- Form Edit Inputs -->
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NAMA LENGKAP"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            android:textColor="#64748B"
-            android:layout_marginBottom="6dp"/>
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="2dp">
 
-        <EditText
-            android:id="@+id/etEditName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_input_rounded"
-            android:paddingHorizontal="16dp"
-            android:textSize="12sp"
-            android:textColor="#0F172A"
-            android:inputType="textPersonName"
-            android:autofillHints="name"
-            android:layout_marginBottom="16dp"
-            tools:ignore="LabelFor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PANGKAT / GOLONGAN"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            android:textColor="#64748B"
-            android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Profil Mandiri"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="24dp"/>
 
-        <EditText
-            android:id="@+id/etEditRank"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_input_rounded"
-            android:paddingHorizontal="16dp"
-            android:textSize="12sp"
-            android:textColor="#0F172A"
-            android:inputType="textCapWords"
-            android:layout_marginBottom="16dp"
-            tools:ignore="Autofill,LabelFor" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NAMA LENGKAP"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/etEditName"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_input_rounded"
+                    android:backgroundTint="#F8FAFC"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:textColorHint="#A7DDC4"
+                    android:inputType="textPersonName"
+                    android:autofillHints="name"
+                    android:layout_marginBottom="20dp"
+                    tools:ignore="LabelFor" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NRP / NIP"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            android:textColor="#64748B"
-            android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PANGKAT / GOLONGAN"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/etEditRank"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_input_rounded"
+                    android:backgroundTint="#F8FAFC"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:textColorHint="#A7DDC4"
+                    android:inputType="textCapWords"
+                    android:layout_marginBottom="20dp"
+                    tools:ignore="Autofill,LabelFor" />
 
-        <EditText
-            android:id="@+id/etEditNrp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_input_rounded"
-            android:paddingHorizontal="16dp"
-            android:textSize="12sp"
-            android:textColor="#0F172A"
-            android:inputType="number"
-            android:layout_marginBottom="16dp"
-            tools:ignore="Autofill,LabelFor" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NRP / NIP"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/etEditNrp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_input_rounded"
+                    android:backgroundTint="#F8FAFC"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:textColorHint="#A7DDC4"
+                    android:inputType="number"
+                    android:layout_marginBottom="20dp"
+                    tools:ignore="Autofill,LabelFor" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="JABATAN DINAS"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            android:textColor="#64748B"
-            android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="JABATAN DINAS"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/etEditJob"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_input_rounded"
+                    android:backgroundTint="#F8FAFC"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:textColorHint="#A7DDC4"
+                    android:inputType="text"
+                    android:layout_marginBottom="20dp"
+                    tools:ignore="Autofill,LabelFor" />
 
-        <EditText
-            android:id="@+id/etEditJob"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_input_rounded"
-            android:paddingHorizontal="16dp"
-            android:textSize="12sp"
-            android:textColor="#0F172A"
-            android:inputType="text"
-            android:layout_marginBottom="16dp"
-            tools:ignore="Autofill,LabelFor" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KESATUAN / UNIT KERJA"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/etEditUnit"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_input_rounded"
+                    android:backgroundTint="#F8FAFC"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:textColorHint="#A7DDC4"
+                    android:inputType="text"
+                    android:layout_marginBottom="20dp"
+                    tools:ignore="Autofill,LabelFor" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="KESATUAN / UNIT KERJA"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            android:textColor="#64748B"
-            android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ID TELEGRAM ATAU NOMOR HP"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/etEditTelegram"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_input_rounded"
+                    android:backgroundTint="#F8FAFC"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:textColorHint="#A7DDC4"
+                    android:inputType="phone"
+                    android:layout_marginBottom="32dp"
+                    tools:ignore="Autofill,LabelFor" />
 
-        <EditText
-            android:id="@+id/etEditUnit"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_input_rounded"
-            android:paddingHorizontal="16dp"
-            android:textSize="12sp"
-            android:textColor="#0F172A"
-            android:inputType="text"
-            android:layout_marginBottom="16dp"
-            tools:ignore="Autofill,LabelFor" />
+                <Button
+                    android:id="@+id/btnSaveProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Simpan Perubahan"
+                    android:backgroundTint="#52B788"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:elevation="0dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ID TELEGRAM ATAU NOMOR HP"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            android:textColor="#64748B"
-            android:layout_marginBottom="6dp"/>
-
-        <EditText
-            android:id="@+id/etEditTelegram"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_input_rounded"
-            android:paddingHorizontal="16dp"
-            android:textSize="12sp"
-            android:textColor="#0F172A"
-            android:inputType="text"
-            android:layout_marginBottom="24dp"
-            tools:ignore="Autofill,LabelFor" />
-
-        <Button
-            android:id="@+id/btnSaveProfile"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="Simpan Perubahan"
-            android:backgroundTint="#0284C7"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:textAllCaps="false"/>
-
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>
