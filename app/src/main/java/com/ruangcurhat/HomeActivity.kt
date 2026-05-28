@@ -22,7 +22,6 @@ class HomeActivity : AppCompatActivity() {
         val layoutDevTrigger = findViewById<LinearLayout>(R.id.layoutDevTrigger)
         val btnOpenDevPanel = findViewById<Button>(R.id.btnOpenDevPanel)
 
-        // Ambil Data Sesi dari Intent Login atau SharedPreferences
         val sharedPref = getSharedPreferences("SESSION", Context.MODE_PRIVATE)
 
         // Ambil data kiriman dari login, jika tidak ada, ambil dari SharedPreferences
@@ -31,7 +30,6 @@ class HomeActivity : AppCompatActivity() {
         val pangkat = intent.getStringExtra("PANGKAT") ?: sharedPref.getString("PANGKAT", "LETDA")
         val nrp = intent.getStringExtra("NRP") ?: sharedPref.getString("NRP", "-")
 
-        // Simpan ke SharedPreferences secara permanen untuk sesi lokal
         sharedPref.edit().apply {
             putString("ROLE", role)
             putString("NAME", name)
@@ -40,7 +38,6 @@ class HomeActivity : AppCompatActivity() {
             apply()
         }
 
-        // Tampilkan Identitas Sesi di Beranda
         tvUserWelcome.text = name
         if (role == "admin") {
             tvRoleBadge.text = "PENGEMBANG / ADMIN"
@@ -54,22 +51,19 @@ class HomeActivity : AppCompatActivity() {
             layoutDevTrigger.visibility = View.GONE
         }
 
-        // Navigasi ke Layar Profil
         btnGoToProfile.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
 
-        // Navigasi ke Panel Pengembang
         btnOpenDevPanel.setOnClickListener {
             startActivity(Intent(this, DevPanelActivity::class.java))
         }
 
-        // Setup Klik Tombol Kategori Agama
-        findViewById<LinearLayout>(R.id.btnCategoryIslam).setOnClickListener { openCategory("Islam") }
-        findViewById<LinearLayout>(R.id.btnCategoryKristen).setOnClickListener { openCategory("Kristen") }
-        findViewById<LinearLayout>(R.id.btnCategoryKatolik).setOnClickListener { openCategory("Katolik") }
-        findViewById<LinearLayout>(R.id.btnCategoryHindu).setOnClickListener { openCategory("Hindu") }
-        findViewById<LinearLayout>(R.id.btnCategoryBuddha).setOnClickListener { openCategory("Buddha") }
+        findViewById<View>(R.id.btnCategoryIslam).setOnClickListener { openCategory("Islam") }
+        findViewById<View>(R.id.btnCategoryKristen).setOnClickListener { openCategory("Kristen") }
+        findViewById<View>(R.id.btnCategoryKatolik).setOnClickListener { openCategory("Katolik") }
+        findViewById<View>(R.id.btnCategoryHindu).setOnClickListener { openCategory("Hindu") }
+        findViewById<View>(R.id.btnCategoryBuddha).setOnClickListener { openCategory("Buddha") }
     }
 
     private fun openCategory(religion: String) {

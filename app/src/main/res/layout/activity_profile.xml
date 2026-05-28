@@ -12,21 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        app:layout_top_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/btnBackFromProfile"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="@drawable/bg_btn_dark"
-            android:backgroundTint="#52B788"
-            android:contentDescription="Kembali"
-            android:elevation="4dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_back_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"> <ImageButton
+        android:id="@+id/btnBackFromProfile"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_btn_dark"
+        android:backgroundTint="#52B788"
+        android:contentDescription="Kembali"
+        android:elevation="4dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_back_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -232,24 +230,21 @@
                 app:backgroundTint="#52B788"
                 app:cornerRadius="18dp"
                 app:elevation="4dp"
-                app:icon="@drawable/ic_edit"
                 app:iconGravity="textStart"
-                app:rippleColor="#44FFFFFF"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Keluar Sistem"
-                android:textAllCaps="false"
-                android:textColor="#D80609"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:backgroundTint="#15D80609"
-                app:cornerRadius="18dp"
-                app:strokeColor="#D80609"
-                app:strokeWidth="1dp" />
+                app:rippleColor="#44FFFFFF"/> <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Keluar Sistem"
+            android:textAllCaps="false"
+            android:textColor="#D80609"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#15D80609"
+            app:cornerRadius="18dp"
+            app:strokeColor="#D80609"
+            app:strokeWidth="1dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

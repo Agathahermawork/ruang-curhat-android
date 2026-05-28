@@ -75,9 +75,13 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Profil Saya"
                     android:padding="14dp"
-                    android:text="👤"
-                    android:textSize="54sp"
                     app:tint="#FFFFFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="👤"
+                    android:textSize="30sp" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 

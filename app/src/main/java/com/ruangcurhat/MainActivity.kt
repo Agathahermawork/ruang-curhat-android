@@ -2,14 +2,13 @@ package com.ruangcurhat
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +22,6 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     private var isPasswordVisible = false
-    private var isDemoTrayOpen = false
     private var activeRole = "dinas" // dinas atau tamu
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,21 +35,19 @@ class MainActivity : AppCompatActivity() {
 
         val btnTabDinas = findViewById<Button>(R.id.btnTabDinas)
         val btnTabTamu = findViewById<Button>(R.id.btnTabTamu)
-
-        val layoutDemoHeader = findViewById<LinearLayout>(R.id.layoutDemoTrayHeader)
-        val layoutDemoContent = findViewById<LinearLayout>(R.id.layoutDemoTrayContent)
-        val ivDemoArrow = findViewById<ImageView>(R.id.ivDemoTrayArrow)
-
-        val btnDemoAdmin = findViewById<LinearLayout>(R.id.btnDemoAdmin)
         val btnSubmit = findViewById<Button>(R.id.btnSubmitLogin)
 
-        // 1. Toggling Mode Dinas vs Tamu
+        // 1. Toggling Mode Dinas vs Tamu dengan Warna Dinamis Hijau Aman #A7DDC4
         btnTabDinas.setOnClickListener {
             activeRole = "dinas"
-            btnTabDinas.setBackgroundColor(resources.getColor(android.R.color.white))
-            btnTabDinas.setTextColor(resources.getColor(R.color.brand_text))
-            btnTabTamu.setBackgroundColor(resources.getColor(android.R.color.transparent))
-            btnTabTamu.setTextColor(resources.getColor(R.color.brand_subtext))
+
+            // Atur background tab Dinas menjadi aktif hijau (#A7DDC4)
+            btnTabDinas.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#A7DDC4"))
+            btnTabDinas.setTextColor(Color.parseColor("#000000"))
+
+            // Atur background tab Tamu menjadi transparan (disabled)
+            btnTabTamu.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+            btnTabTamu.setTextColor(Color.parseColor("#C7C7CC"))
 
             tvLabelEmail.text = "E-MAIL DINAS / USERNAME"
             etEmail.hint = "Masukkan e-mail dinas..."
@@ -59,10 +55,14 @@ class MainActivity : AppCompatActivity() {
 
         btnTabTamu.setOnClickListener {
             activeRole = "tamu"
-            btnTabTamu.setBackgroundColor(resources.getColor(android.R.color.white))
-            btnTabTamu.setTextColor(resources.getColor(R.color.brand_text))
-            btnTabDinas.setBackgroundColor(resources.getColor(android.R.color.transparent))
-            btnTabDinas.setTextColor(resources.getColor(R.color.brand_subtext))
+
+            // Atur background tab Tamu menjadi aktif hijau (#A7DDC4)
+            btnTabTamu.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#A7DDC4"))
+            btnTabTamu.setTextColor(Color.parseColor("#000000"))
+
+            // Atur background tab Dinas menjadi transparan (disabled)
+            btnTabDinas.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+            btnTabDinas.setTextColor(Color.parseColor("#C7C7CC"))
 
             tvLabelEmail.text = "E-MAIL TAMU / NAMA ANONIM"
             etEmail.hint = "Masukkan nama samaran..."
@@ -81,26 +81,7 @@ class MainActivity : AppCompatActivity() {
             etPassword.setSelection(etPassword.text.length)
         }
 
-        // 3. Toggling Accordion Demo Tray
-        layoutDemoHeader.setOnClickListener {
-            if (isDemoTrayOpen) {
-                layoutDemoContent.visibility = View.GONE
-                ivDemoArrow.animate().rotation(0f).start()
-            } else {
-                layoutDemoContent.visibility = View.VISIBLE
-                ivDemoArrow.animate().rotation(180f).start()
-            }
-            isDemoTrayOpen = !isDemoTrayOpen
-        }
-
-        // Autofill dari Demo Tray
-        btnDemoAdmin.setOnClickListener {
-            etEmail.setText("admin@gmail.com")
-            etPassword.setText("admin123")
-            Toast.makeText(this, "Kredensial Demo Dimuat!", Toast.LENGTH_SHORT).show()
-        }
-
-        // 4. Submit Login ke API Laravel
+        // 3. Submit Login ke API Laravel
         btnSubmit.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
@@ -126,10 +107,11 @@ class MainActivity : AppCompatActivity() {
                         return
                     }
 
+                    // Penanganan Null Safety dengan Elvis Operator (?: "") agar tidak crash jika ada properti null
                     getSharedPreferences("SESSION", Context.MODE_PRIVATE).edit().apply {
                         putString("TOKEN", body.token)
                         putString("ROLE", user.role ?: "user")
-                        putString("NAME", user.name)
+                        putString("NAME", user.name ?: "")
                         putString("PANGKAT", user.pangkat ?: "")
                         putString("NRP", user.nrp ?: "")
                         putString("JABATAN", user.jabatan ?: "")
@@ -139,6 +121,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     Toast.makeText(this@MainActivity, "Autentikasi Berhasil!", Toast.LENGTH_SHORT).show()
+
+                    // Pindah ke HomeActivity
                     startActivity(Intent(this@MainActivity, HomeActivity::class.java))
                     finish()
                 }
