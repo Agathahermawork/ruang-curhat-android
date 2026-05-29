@@ -29,6 +29,7 @@ class EditProfileActivity : AppCompatActivity() {
         val etJob = findViewById<EditText>(R.id.etEditJob)
         val etUnit = findViewById<EditText>(R.id.etEditUnit)
         val etTelegram = findViewById<EditText>(R.id.etEditTelegram)
+        val etPassword = findViewById<EditText>(R.id.etEditPassword)
         val btnSave = findViewById<Button>(R.id.btnSaveProfile)
 
         // Muat data lama untuk diedit
@@ -49,9 +50,15 @@ class EditProfileActivity : AppCompatActivity() {
             val job = etJob.text.toString().trim()
             val unit = etUnit.text.toString().trim()
             val telegram = etTelegram.text.toString().trim()
+            val password = etPassword.text.toString()
 
             if (name.isEmpty() || rank.isEmpty() || nrp.isEmpty()) {
                 Toast.makeText(this, "Nama, Pangkat, dan NRP wajib diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (password.isNotBlank() && password.length < 6) {
+                Toast.makeText(this, "Password baru minimal 6 karakter!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -70,7 +77,8 @@ class EditProfileActivity : AppCompatActivity() {
                 nrp = nrp,
                 jabatan = job,
                 kesatuan = unit,
-                telegram = telegram
+                telegram = telegram,
+                password = password.takeIf { it.isNotBlank() }
             )
 
             ApiClient.service.updateProfile("Bearer $token", request).enqueue(object : Callback<ApiResponse<UserDto>> {
@@ -95,6 +103,7 @@ class EditProfileActivity : AppCompatActivity() {
                         putString("TELEGRAM", user.telegram ?: "")
                         apply()
                     }
+                    etPassword.text.clear()
 
                     Toast.makeText(this@EditProfileActivity, "Perubahan berhasil disimpan!", Toast.LENGTH_SHORT).show()
                     finish()

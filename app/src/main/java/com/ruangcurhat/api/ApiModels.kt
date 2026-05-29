@@ -42,7 +42,8 @@ data class UpdateProfileRequest(
     val nrp: String,
     val jabatan: String?,
     val kesatuan: String?,
-    val telegram: String?
+    val telegram: String?,
+    val password: String?
 )
 
 data class UserDto(
