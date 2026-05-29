@@ -64,6 +64,7 @@ class HomeActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnCategoryKatolik).setOnClickListener { openCategory("Katolik") }
         findViewById<View>(R.id.btnCategoryHindu).setOnClickListener { openCategory("Hindu") }
         findViewById<View>(R.id.btnCategoryBuddha).setOnClickListener { openCategory("Buddha") }
+        findViewById<View>(R.id.btnCategoryKonghucu).setOnClickListener { openCategory("Konghucu") }
     }
 
     private fun openCategory(religion: String) {

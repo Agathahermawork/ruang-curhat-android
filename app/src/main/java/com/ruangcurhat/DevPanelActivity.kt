@@ -45,6 +45,7 @@ class DevPanelActivity : AppCompatActivity() {
         val btnSaveCons = findViewById<Button>(R.id.btnRegisterNewCounselor)
 
         val etUserEmail = findViewById<EditText>(R.id.etDevUserEmail)
+        val etUserPassword = findViewById<EditText>(R.id.etDevUserPassword)
         val etUserName = findViewById<EditText>(R.id.etDevUserName)
         val etUserRank = findViewById<EditText>(R.id.etDevUserRank)
         val etUserNrp = findViewById<EditText>(R.id.etDevUserNrp)
@@ -52,7 +53,7 @@ class DevPanelActivity : AppCompatActivity() {
 
         layoutDevConsListContainer = findViewById(R.id.layoutDevConsListContainer)
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayOf("Islam", "Kristen", "Katolik", "Hindu", "Buddha"))
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayOf("Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu"))
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerRel.adapter = adapter
 
@@ -108,12 +109,18 @@ class DevPanelActivity : AppCompatActivity() {
 
         btnSaveUser.setOnClickListener {
             val email = etUserEmail.text.toString().trim()
+            val password = etUserPassword.text.toString()
             val name = etUserName.text.toString().trim()
             val rank = etUserRank.text.toString().trim()
             val nrp = etUserNrp.text.toString().trim()
 
-            if (email.isEmpty() || name.isEmpty() || rank.isEmpty() || nrp.isEmpty()) {
+            if (email.isEmpty() || password.isEmpty() || name.isEmpty() || rank.isEmpty() || nrp.isEmpty()) {
                 Toast.makeText(this, "Semua kolom anggota dinas wajib diisi!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (password.length < 6) {
+                Toast.makeText(this, "Password minimal 6 karakter!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -122,7 +129,7 @@ class DevPanelActivity : AppCompatActivity() {
 
             val request = RegisterRequest(
                 email = email,
-                password = null,
+                password = password,
                 name = name,
                 pangkat = rank.uppercase(),
                 nrp = nrp,
@@ -144,11 +151,12 @@ class DevPanelActivity : AppCompatActivity() {
                     }
 
                     etUserEmail.text.clear()
+                    etUserPassword.text.clear()
                     etUserName.text.clear()
                     etUserRank.text.clear()
                     etUserNrp.text.clear()
 
-                    Toast.makeText(this@DevPanelActivity, "Akun dinas berhasil diaktifkan. Password default: password123", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@DevPanelActivity, "Akun dinas berhasil diaktifkan.", Toast.LENGTH_LONG).show()
                 }
 
                 override fun onFailure(call: Call<ApiResponse<UserDto>>, t: Throwable) {
